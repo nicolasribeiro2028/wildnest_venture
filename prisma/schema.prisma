@@ -1,0 +1,66 @@
+// Prisma schema — see AGENTS.md for data model reference.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  listings      Listing[]
+  conversations Conversation[] @relation("StudentConversations")
+  messages      Message[]
+}
+
+model Listing {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  tag         String   // "sublet" | "landlord"
+  term        String   // "summer" | "year_long"
+  title       String
+  description String?
+  price       String?
+  startDate   String?  @map("start_date")
+  endDate     String?  @map("end_date")
+  pinX        Float    @map("pin_x")   // 0–100 percentage on map
+  pinY        Float    @map("pin_y")   // 0–100 percentage on map
+  imageUrls   String?  @map("image_urls") // JSON array as string for SQLite
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
+}
+
+model Conversation {
+  id             String   @id @default(cuid())
+  listingId      String   @map("listing_id")
+  studentUserId  String   @map("student_user_id")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  listing Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  student User     @relation("StudentConversations", fields: [studentUserId], references: [id], onDelete: Cascade)
+  messages Message[]
+
+  @@unique([listingId, studentUserId])
+}
+
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String   @map("conversation_id")
+  senderUserId   String   @map("sender_user_id")
+  body           String
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender       User         @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
+}
