@@ -52,7 +52,7 @@ export async function loginAction(_prev: AuthResult, formData: FormData): Promis
   session.userId = user.id;
   await session.save();
 
-  redirect("/search");
+  redirect("/");
 }
 
 export async function logoutAction(): Promise<void> {
