@@ -1,5 +1,5 @@
 /**
- * Aparturtle mascot — small green turtle for brand resemblance.
+ * WildNest mascot — small green turtle for brand resemblance.
  * Geometric, Bauhaus-friendly SVG. Use at bottom of front page.
  */
 export function Turtle({ className = "" }: { className?: string }) {

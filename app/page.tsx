@@ -2,12 +2,13 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/ui";
 import { Turtle } from "@/components/landing";
 
+export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[var(--background)]">
       {/* Bauhaus-style hero block */}
       <header className="border-b-4 border-[var(--bauhaus-purple)] bg-[var(--bauhaus-green)] px-6 py-8 text-white">
         <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          Aparturtle
+          WildNest
         </h1>
         <p className="mt-2 text-lg opacity-95">
           Student housing — summer & year-long
