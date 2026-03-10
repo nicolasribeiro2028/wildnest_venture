@@ -21,7 +21,7 @@ export default async function ProtectedLayout({
             href="/search"
             className="font-semibold text-zinc-800 dark:text-zinc-100"
           >
-            Aparturtle
+            WildNest
           </Link>
           <form action={logoutAction}>
             <button

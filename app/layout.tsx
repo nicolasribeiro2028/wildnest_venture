@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aparturtle — Student Housing",
+  title: "WildNest — Student Housing",
   description: "Find summer and year-long housing near campus.",
 };
 

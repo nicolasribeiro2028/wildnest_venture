@@ -8,7 +8,7 @@ export default async function Home() {
     <div className="flex min-h-screen flex-col items-center justify-center gap-8 bg-zinc-50 px-4 font-sans dark:bg-zinc-950">
       <div className="flex w-full max-w-2xl flex-col items-center gap-8">
         <h1 className="text-center text-3xl font-bold text-zinc-800 dark:text-zinc-100">
-          Aparturtle — Student Housing
+          WildNest — Student Housing
         </h1>
         <p className="text-center text-zinc-600 dark:text-zinc-400">
           Find summer and year-long housing near campus.

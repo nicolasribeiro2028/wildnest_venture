@@ -11,7 +11,7 @@ export interface SessionData {
 
 const sessionOptions = {
   password: process.env.SESSION_SECRET ?? "change-me-in-production-min-32-chars",
-  cookieName: "aparturtle_session",
+  cookieName: "wildnest_session",
   cookieOptions: {
     secure: process.env.NODE_ENV === "production",
     httpOnly: true,

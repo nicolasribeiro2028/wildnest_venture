@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
-const MASTER_EMAIL = process.env.MASTER_EMAIL ?? "master@aparturtle.local";
+const MASTER_EMAIL = process.env.MASTER_EMAIL ?? "master@wildnest.local";
 const MASTER_PASSWORD = process.env.MASTER_PASSWORD ?? "master-change-me";
 
 async function main() {
