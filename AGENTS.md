@@ -36,11 +36,11 @@ Keep the stack simple; avoid adding new frameworks or services unless the plan b
    - Session (e.g. cookie).  
    - Protect all listing/map routes: redirect unauthenticated users to login.
 
-4. **Map + pins**  
+4. **Map + pins** 
    - Load map from configurable image path.  
    - Render pins from listing positions (`pin_x`, `pin_y` as %).  
    - Click pin → navigate to listing detail (or tooltip then detail).  
-   - Use placeholder map until the real one is provided.
+   - Template map was alreafy provided.
 
 5. **Listings**  
    - DB schema: listings with `tag` (sublet | landlord), `term` (summer | year_long), `pin_x`, `pin_y`, and other fields from the data model below.  
