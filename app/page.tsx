@@ -2,7 +2,6 @@ import Link from "next/link";
 import { ButtonLink } from "@/components/ui";
 import { Turtle } from "@/components/landing";
 
-export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[var(--background)]">
       {/* Bauhaus-style hero block */}

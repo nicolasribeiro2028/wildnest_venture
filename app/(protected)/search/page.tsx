@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function SearchPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center gap-6 px-4 font-sans">
+    <div className="flex flex-1 flex-col items-center justify-center gap-6 px-4 font-sans">
       <h1 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
-        Search engine
+        Search
       </h1>
       <p className="text-zinc-600 dark:text-zinc-400">
         Map and listings will go here.
