@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { PostListingForm } from "@/components/listings/PostListingForm";
 
 export default function PostListingPage() {
@@ -17,7 +18,9 @@ export default function PostListingPage() {
         Add your sublet or landlord listing to the map.
       </p>
       <div className="mt-8">
-        <PostListingForm />
+        <Suspense fallback={<div className="h-64 animate-pulse rounded-lg bg-zinc-100 dark:bg-zinc-800" />}>
+          <PostListingForm />
+        </Suspense>
       </div>
     </div>
   );

@@ -22,12 +22,20 @@ export async function AppHeader() {
             Listings
           </Link>
           {userId && (
-            <Link
-              href="/listings/new"
-              className="text-sm font-medium text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400"
-            >
-              Post listing
-            </Link>
+            <>
+              <Link
+                href="/my-sublets"
+                className="text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+              >
+                Manage my sublets
+              </Link>
+              <Link
+                href="/listings/new"
+                className="text-sm font-medium text-amber-600 hover:text-amber-700 dark:text-amber-500 dark:hover:text-amber-400"
+              >
+                Post listing
+              </Link>
+            </>
           )}
         </div>
         {userId ? (

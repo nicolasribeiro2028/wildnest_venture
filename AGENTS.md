@@ -51,9 +51,9 @@ Keep the stack simple; avoid adding new frameworks or services unless the plan b
    - List view and detail view; filters by term and tag; sort by date or price.  
    - Edit/delete from detail page when owner.
 
-6. **Manage my sublets**  
-   - Dedicated section (page or sidebar): list only current user’s listings where `tag = 'sublet'`.  
-   - Create, edit, delete sublet listings from here.
+6. **Manage my sublets**  -- DONE --  
+   - Dedicated page `/my-sublets`: list only current user’s listings where `tag = 'sublet'`.  
+   - Create (Add sublet → /listings/new?tag=sublet), edit, delete sublet listings from here.
 
 7. **Messaging**  
    - DB: conversations (listing_id, student_user_id), messages (conversation_id, sender_user_id, body).  

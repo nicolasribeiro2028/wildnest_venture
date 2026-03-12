@@ -14,6 +14,14 @@ Student housing for a single campus: browse summer and year-long listings on a m
 - **Theme:** Bauhaus-inspired (green + purple)
 
 ---
+## TO BE FIXED
+
+- Make the listing appear in the same page as the map
+- Change the shitty UI
+- Implement Sign in Procedure of creating an account
+- Implement the preferences selection and (fake) changes in the Map 
+
+---
 
 ## Getting started
 
@@ -74,3 +82,5 @@ prisma/
 ## License
 
 Private — for MVP development.
+
+

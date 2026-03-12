@@ -52,7 +52,19 @@ export async function getListingById(id: string) {
   });
 }
 
-export async function createListingAction(data: ListingFormData) {
+export async function getMySublets() {
+  const userId = await getCurrentUserId();
+  if (!userId) return [];
+
+  return prisma.listing.findMany({
+    where: { userId, tag: "sublet" },
+    orderBy: { createdAt: "desc" },
+  });
+}
+
+export async function createListingAction(
+  data: ListingFormData & { returnTo?: string }
+) {
   const userId = await getCurrentUserId();
   if (!userId) redirect("/login");
 
@@ -77,7 +89,8 @@ export async function createListingAction(data: ListingFormData) {
 
   revalidatePath("/search");
   revalidatePath("/listings");
-  redirect("/listings");
+  revalidatePath("/my-sublets");
+  redirect(data.returnTo === "my-sublets" ? "/my-sublets" : "/listings");
 }
 
 export async function updateListingAction(id: string, data: ListingFormData) {
@@ -110,6 +123,7 @@ export async function updateListingAction(id: string, data: ListingFormData) {
 
   revalidatePath("/search");
   revalidatePath("/listings");
+  revalidatePath("/my-sublets");
   revalidatePath(`/listings/${id}`);
   redirect(`/listings/${id}`);
 }
@@ -127,5 +141,6 @@ export async function deleteListingAction(id: string) {
 
   revalidatePath("/search");
   revalidatePath("/listings");
-  redirect("/listings");
+  revalidatePath("/my-sublets");
+  redirect(existing.tag === "sublet" ? "/my-sublets" : "/listings");
 }
