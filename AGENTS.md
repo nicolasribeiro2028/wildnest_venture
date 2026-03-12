@@ -12,7 +12,7 @@ This file is the **single source of truth** for the Student Housing MVP. When ma
 | **Backend** | Next.js API routes **or** small Node/Express service | REST or simple RPC; session-based auth. |
 | **Database** | SQLite (MVP) or Postgres | users, listings, conversations, messages. |
 | **Auth** | Simple custom (email + password hash, session cookie) | Minimal; intended to be **replaced later**. No OAuth required for MVP. |
-| **Map** | Static image (PNG) + CSS/SVG overlay for pins | Map image path in config; placeholder until real map is provided. Pin positions as % (pin_x, pin_y). |
+| **Map** | Mapbox GL JS (external API) | `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN` required. Pin positions: `pin_x`, `pin_y` as % converted to lat/lng within campus bounds; optional `latitude`, `longitude` for future. Fallback to static image if no key. |
 | **File storage** | Local or simple cloud (e.g. Supabase Storage / S3) | Listing photos; store URLs in DB. Can defer to “listing images” step. |
 
 Keep the stack simple; avoid adding new frameworks or services unless the plan below explicitly requires them.
@@ -37,10 +37,11 @@ Keep the stack simple; avoid adding new frameworks or services unless the plan b
    - Protect all listing/map routes: redirect unauthenticated users to login.
 
 4. **Map + pins** 
-   - Load map from configurable image path.  
-   - Render pins from listing positions (`pin_x`, `pin_y` as %).  
-   - Click pin → navigate to listing detail (or tooltip then detail).  
-   - Template map was alreafy provided.
+   - Use Mapbox GL JS with `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN`; fallback to static image if key missing.  
+   - Map config: center (campus lat/lng), zoom, style in `app/lib/config.ts`.  
+   - Fetch listings from DB; convert `pin_x`, `pin_y` (0–100%) to lat/lng within campus bounds.  
+   - Render pins on map; click pin → navigate to listing detail (or tooltip then detail).  
+   - Client component `MapView` in `components/map/`; search page fetches listings and passes to MapView.
 
 5. **Listings**  
    - DB schema: listings with `tag` (sublet | landlord), `term` (summer | year_long), `pin_x`, `pin_y`, and other fields from the data model below.  

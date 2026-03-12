@@ -22,6 +22,26 @@ async function main() {
     },
   });
   console.log("Master user ready:", user.email);
+
+  // Sample listing for map testing (step 4)
+  await prisma.listing.upsert({
+    where: { id: "seed-listing-1" },
+    update: {},
+    create: {
+      id: "seed-listing-1",
+      userId: user.id,
+      tag: "sublet",
+      term: "summer",
+      title: "Cozy room near campus",
+      description: "Quiet room with shared kitchen. Available June–August.",
+      price: "850",
+      startDate: "2025-06-01",
+      endDate: "2025-08-31",
+      pinX: 50,
+      pinY: 45,
+    },
+  });
+  console.log("Sample listing ready for map");
 }
 
 main()

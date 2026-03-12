@@ -46,7 +46,8 @@ npm run dev            # start dev server at http://localhost:3000
 ### Environment
 
 - `DATABASE_URL` — SQLite path, e.g. `file:./dev.db` (default in `.env`)
-- `NEXT_PUBLIC_MAP_IMAGE_PATH` — Map image path (default `/assets/campus-map.png`). Replace the file in `public/assets/` when you have the real campus map.
+- `NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN` — Mapbox API key for interactive map. Get one at [mapbox.com](https://mapbox.com). Omit to fallback to static image.
+- `NEXT_PUBLIC_MAP_IMAGE_PATH` — Fallback map image path (default `/assets/campus-map.png`) when Mapbox token is not set.
 
 ---
 
@@ -57,7 +58,8 @@ app/
   page.tsx          # Public front page (landing)
   login/             # Sign-in (placeholder until Step 3)
   signup/            # Sign-up (placeholder until Step 3)
-  search/            # Search / map entry (placeholder)
+  (protected)/search/ # Map + pins (Mapbox or static fallback)
+  (protected)/listings/[id]/  # Listing detail (from map pin click)
   lib/                # db.ts, config.ts
   globals.css        # Bauhaus theme (green, purple)
 components/
