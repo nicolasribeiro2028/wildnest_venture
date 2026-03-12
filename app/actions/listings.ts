@@ -42,7 +42,7 @@ export async function getListings(filters: {
 
   const listings = await prisma.listing.findMany({
     where,
-    include: { user: { select: { name: true } } },
+    include: { user: { select: { firstName: true, lastName: true } } },
     orderBy:
       filters.sort === "price"
         ? [{ price: "asc" }, { createdAt: "desc" }]
@@ -54,7 +54,7 @@ export async function getListings(filters: {
 export async function getListingById(id: string) {
   return prisma.listing.findUnique({
     where: { id },
-    include: { user: { select: { name: true, id: true } } },
+    include: { user: { select: { firstName: true, lastName: true, id: true } } },
   });
 }
 

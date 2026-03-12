@@ -56,10 +56,10 @@ export async function getConversations() {
         select: {
           id: true,
           title: true,
-          user: { select: { name: true } },
+          user: { select: { firstName: true, lastName: true } },
         },
       },
-      student: { select: { id: true, name: true } },
+      student: { select: { id: true, firstName: true, lastName: true } },
       messages: {
         orderBy: { createdAt: "desc" },
         take: 1,
@@ -74,8 +74,10 @@ export async function getConversations() {
     listing: { id: c.listing.id, title: c.listing.title },
     otherParty:
       c.studentUserId === userId
-        ? c.listing.user?.name ?? "Listing owner"
-        : c.student.name ?? "Student",
+        ? c.listing.user
+          ? `${c.listing.user.firstName} ${c.listing.user.lastName}`
+          : "Listing owner"
+        : `${c.student.firstName} ${c.student.lastName}`,
     lastMessage: c.messages[0] ?? null,
     createdAt: c.createdAt,
   }));
@@ -91,9 +93,9 @@ export async function getThread(conversationId: string) {
       listing: {
         select: { id: true, title: true, userId: true },
       },
-      student: { select: { id: true, name: true } },
+      student: { select: { id: true, firstName: true, lastName: true } },
       messages: {
-        include: { sender: { select: { id: true, name: true } } },
+        include: { sender: { select: { id: true, firstName: true, lastName: true } } },
         orderBy: { createdAt: "asc" },
       },
     },

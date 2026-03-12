@@ -8,14 +8,20 @@ export type AuthResult = { error?: string };
 
 export async function signupAction(_prev: AuthResult, formData: FormData): Promise<AuthResult> {
   const email = (formData.get("email") as string)?.trim().toLowerCase();
+  const firstName = (formData.get("first_name") as string)?.trim();
+  const lastName = (formData.get("last_name") as string)?.trim();
+  const phone = (formData.get("phone") as string)?.trim() || null;
   const password = formData.get("password") as string;
-  const name = (formData.get("name") as string)?.trim() || null;
+  const confirmPassword = formData.get("confirm_password") as string;
 
-  if (!email || !password) {
-    return { error: "Email and password are required." };
+  if (!email || !firstName || !lastName || !password) {
+    return { error: "First name, last name, email, and password are required." };
   }
   if (password.length < 8) {
     return { error: "Password must be at least 8 characters." };
+  }
+  if (password !== confirmPassword) {
+    return { error: "Passwords do not match." };
   }
 
   const existing = await prisma.user.findUnique({ where: { email } });
@@ -25,14 +31,14 @@ export async function signupAction(_prev: AuthResult, formData: FormData): Promi
 
   const passwordHash = await hashPassword(password);
   const user = await prisma.user.create({
-    data: { email, name, passwordHash },
+    data: { email, firstName, lastName, phone, passwordHash },
   });
 
   const session = await getSession();
   session.userId = user.id;
   await session.save();
 
-  redirect("/search");
+  redirect("/signup/preferences");
 }
 
 export async function loginAction(_prev: AuthResult, formData: FormData): Promise<AuthResult> {

@@ -49,7 +49,7 @@ export default async function ThreadPage({
               }`}
             >
               <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                {msg.sender.name ?? "Unknown"}
+                {`${msg.sender.firstName} ${msg.sender.lastName}`}
               </p>
               <p className="mt-1">{msg.body}</p>
               <p className="mt-1 text-xs opacity-75">

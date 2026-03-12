@@ -58,9 +58,9 @@ export default async function ListingDetailPage({
             {listing.description}
           </p>
         )}
-        {listing.user.name && (
+        {listing.user && (
           <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
-            Listed by {listing.user.name}
+            Listed by {listing.user.firstName} {listing.user.lastName}
           </p>
         )}
         {!isOwner && userId && (

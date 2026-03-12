@@ -35,9 +35,11 @@ This file documents the **core logic** of WildNest so team members can understan
 |-------|--------|------|
 | `/`, `/search`, `/listings`, `/listings/[id]` | Public | No auth required. |
 | `/login`, `/signup` | Public | Auth pages. |
+| `/signup/preferences` | Public (post-signup) | Step 2 of sign-up; skippable. Accessible immediately after account creation. |
 | `/listings/new`, `/listings/[id]/edit` | Protected | Owner check on edit. |
 | `/my-sublets` | Protected | Only current user's sublets. |
 | `/messages`, `/messages/[id]` | Protected | Participant check on thread. |
+| `/profile` | Protected | View and edit account info + room preferences. |
 
 ---
 
@@ -108,17 +110,79 @@ This file documents the **core logic** of WildNest so team members can understan
 
 ## 8. Data model
 
-- **users**: id, email, name, password_hash, created_at
+- **users**: id, email, first_name, last_name, phone (nullable), password_hash, created_at
 - **listings**: id, user_id, tag (sublet | landlord), term (summer | year_long), title, description, price, start_date, end_date, pin_x, pin_y, image_urls (JSON), created_at, updated_at
 - **conversations**: id, listing_id, student_user_id, created_at — unique on (listing_id, student_user_id)
 - **messages**: id, conversation_id, sender_user_id, body, created_at
+- **user_preferences**: id, user_id (FK → users, unique), total_occupants (int, nullable), max_rent (int, nullable), location_tags (JSON array, nullable), quiet_place (bool, nullable), has_dog (bool, nullable), close_to_supermarket (bool, nullable), close_to_bus_stop (bool, nullable), updated_at
 
-**Invariants**: One conversation per (listing, student). Sublets = listings where `user_id = current_user` and `tag = 'sublet'`.
+**Invariants**: One conversation per (listing, student). Sublets = listings where `user_id = current_user` and `tag = 'sublet'`. One `user_preferences` row per user (upsert on save).
 
 ---
 
-## 9. Planned / future work
+## 9. Sign-up flow & user preferences
+
+### Sign-up: Step 1 — Account creation (`/signup`)
+
+Fields:
+- First name, Last name (required)
+- Email (required)
+- Password + confirm password (required)
+- Cellphone (optional)
+
+On success: create `users` row, open session, redirect to `/signup/preferences`.
+
+### Sign-up: Step 2 — Room preferences (`/signup/preferences`)
+
+This page is **skippable**. A prominent "Skip for now" button redirects to `/` without saving anything.
+If the user fills it in and submits, an upsert creates/updates the `user_preferences` row.
+
+Fields and UI:
+
+| Field | UI | Storage |
+|-------|-----|---------|
+| Total occupants | Number stepper (1–10+) | `total_occupants` int |
+| Max rent (total, USD/mo) | Number input | `max_rent` int |
+| Preferred area | Multi-select pill buttons (any combination) | `location_tags` JSON array |
+| Quiet place? | Y / N toggle button | `quiet_place` bool |
+| I have a dog | Y / N toggle button | `has_dog` bool |
+| Close to supermarket? | Y / N toggle button | `close_to_supermarket` bool |
+| Close to bus stop? | Y / N toggle button | `close_to_bus_stop` bool |
+
+Location tag values (exact strings stored in JSON array):
+`north_campus`, `central_campus`, `south_campus`, `close_to_evanston`, `downtown_evanston`, `south_evanston`
+— geographic boundaries for each tag will be defined when the matching algorithm is built.
+
+### Profile page (`/profile`) — protected
+
+Displays and allows editing of:
+1. Account info: first name, last name, email, phone.
+2. Room preferences: same fields and Y/N button UI as Step 2 above.
+
+On load: fetch `users` row + left-join `user_preferences` (may be empty if skipped).
+On save: update `users`; upsert `user_preferences`.
+
+### Actions
+
+| Action | File | Notes |
+|--------|------|-------|
+| `signupAction` | `app/actions/auth.ts` | Creates user; opens session; returns redirect to `/signup/preferences`. |
+| `savePreferencesAction` | `app/actions/preferences.ts` | Upsert `user_preferences` for current user. Used by both `/signup/preferences` and `/profile`. |
+| `updateProfileAction` | `app/actions/profile.ts` | Updates `first_name`, `last_name`, `email`, `phone` on `users`. |
+
+### Key files (new)
+
+| Path | Role |
+|------|------|
+| `app/signup/preferences/page.tsx` | Step 2 preferences UI (skippable). |
+| `app/profile/page.tsx` | View/edit account info + preferences. |
+| `app/actions/preferences.ts` | `savePreferencesAction` (upsert). |
+| `app/actions/profile.ts` | `updateProfileAction`. |
+
+---
+
+## 10. Planned / future work
 
 - **UI polish** — Refine many small interface elements.
-- **House-selection algorithm** — Matching/recommendation logic for listings.
+- **House-selection algorithm** — Matching/recommendation logic for listings; will consume `user_preferences` data collected above.
 - Replace auth with OAuth; payments; contracts; verification; reviews; multi-campus; admin moderation; real-time messaging; notifications.

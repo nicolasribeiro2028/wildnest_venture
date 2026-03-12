@@ -45,14 +45,22 @@ export async function AppHeader() {
           )}
         </div>
         {userId ? (
-          <form action={logoutAction}>
-            <button
-              type="submit"
+          <div className="flex items-center gap-4">
+            <Link
+              href="/profile"
               className="text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
             >
-              Sign out
-            </button>
-          </form>
+              Profile
+            </Link>
+            <form action={logoutAction}>
+              <button
+                type="submit"
+                className="text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+              >
+                Sign out
+              </button>
+            </form>
+          </div>
         ) : (
           <div className="flex items-center gap-3">
             <Link

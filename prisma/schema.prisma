@@ -12,13 +12,31 @@ datasource db {
 model User {
   id           String   @id @default(cuid())
   email        String   @unique
-  name         String?
+  firstName    String   @map("first_name")
+  lastName     String   @map("last_name")
+  phone        String?
   passwordHash String   @map("password_hash")
   createdAt    DateTime @default(now()) @map("created_at")
 
   listings      Listing[]
   conversations Conversation[] @relation("StudentConversations")
   messages      Message[]
+  preferences   UserPreference?
+}
+
+model UserPreference {
+  id                 String   @id @default(cuid())
+  userId             String   @unique @map("user_id")
+  totalOccupants     Int?     @map("total_occupants")
+  maxRent            Int?     @map("max_rent")
+  locationTags       String?  @map("location_tags")    // JSON array as string
+  quietPlace         Boolean? @map("quiet_place")
+  hasDog             Boolean? @map("has_dog")
+  closeToSupermarket Boolean? @map("close_to_supermarket")
+  closeToBusStop     Boolean? @map("close_to_bus_stop")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Listing {

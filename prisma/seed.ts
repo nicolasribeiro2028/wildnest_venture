@@ -17,7 +17,8 @@ async function main() {
     update: { passwordHash },
     create: {
       email: MASTER_EMAIL,
-      name: "Master",
+      firstName: "Master",
+      lastName: "User",
       passwordHash,
     },
   });
