@@ -31,7 +31,7 @@ Keep the stack simple; avoid adding new frameworks or services unless the plan b
    - CTA to sign in / sign up; link to search (map).  
    - Search and listing detail are public.
 
-3. **Simple auth**  -- DONE--
+3. **Simple auth**  -- DONE -- 
    - Sign up (e.g. email + password), sign in, sign out.  
    - Session (e.g. cookie).  
    - Search (map) and listing detail are **public** (no login required).  
