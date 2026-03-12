@@ -2,6 +2,8 @@
 
 Student housing for a single campus: browse summer and year-long listings on a map, message listers, and post sublets or landlord listings. Public front page and search (map); Post listing, Manage my sublets, and Messages require sign-in.
 
+**Status:** Main logic is implemented and the system is workable. Many small UI interfaces need refinement. A house-selection algorithm is planned for later implementation.
+
 **Construction plan:** See **[AGENTS.md](./AGENTS.md)** for the step-by-step build, tech choices, and data model. All design and implementation decisions should align with that document.
 
 ---
@@ -14,12 +16,11 @@ Student housing for a single campus: browse summer and year-long listings on a m
 - **Theme:** Bauhaus-inspired (green + purple)
 
 ---
-## TO BE FIXED
 
-- Make the listing appear in the same page as the map
-- Change the shitty UI
-- Implement Sign in Procedure of creating an account
-- Implement the preferences selection and (fake) changes in the Map 
+## Planned improvements
+
+- **UI polish** — Refine many small interface elements across the app
+- **House-selection algorithm** — Implement matching/recommendation logic for listings (to be added later)
 
 ---
 
