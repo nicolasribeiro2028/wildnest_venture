@@ -31,3 +31,14 @@ export function pinPercentToLatLng(
   const lat = north - (pinY / 100) * (north - south);
   return [lng, lat];
 }
+
+/** Reverse: convert lat/lng to pin_x, pin_y (0–100) for pin picker */
+export function latLngToPinPercent(
+  lat: number,
+  lng: number
+): [number, number] {
+  const { north, south, west, east } = campusBounds;
+  const pinX = ((lng - west) / (east - west)) * 100;
+  const pinY = ((north - lat) / (north - south)) * 100;
+  return [pinX, pinY];
+}

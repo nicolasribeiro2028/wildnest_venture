@@ -44,11 +44,12 @@ Keep the stack simple; avoid adding new frameworks or services unless the plan b
    - Render pins on map; click pin → navigate to listing detail (or tooltip then detail).  
    - Client component `MapView` in `components/map/`; search page fetches listings and passes to MapView.
 
-5. **Listings**  
+5. **Listings**  -- DONE --
    - DB schema: listings with `tag` (sublet | landlord), `term` (summer | year_long), `pin_x`, `pin_y`, and other fields from the data model below.  
    - API: CRUD for listings (scoped to current user for create/update/delete).  
-   - “Post listing” form: tag, term, title, description, price, dates, pin position (e.g. click on map to set), optional images.  
-   - List view and detail view; filters by term and tag; sort by date or price.
+   - “Post listing” form: tag, term, title, description, price, dates, pin position (click on map to set), optional images (deferred to step 8).  
+   - List view and detail view; filters by term and tag; sort by date or price.  
+   - Edit/delete from detail page when owner.
 
 6. **Manage my sublets**  
    - Dedicated section (page or sidebar): list only current user’s listings where `tag = 'sublet'`.  

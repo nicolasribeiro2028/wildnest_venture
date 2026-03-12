@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { prisma } from "@/app/lib/db";
+import { getListingById } from "@/app/actions/listings";
+import { getCurrentUserId } from "@/app/lib/auth";
+import { ListingActions } from "@/components/listings/ListingActions";
 
 export default async function ListingDetailPage({
   params,
@@ -9,12 +11,11 @@ export default async function ListingDetailPage({
 }) {
   const { id } = await params;
 
-  const listing = await prisma.listing.findUnique({
-    where: { id },
-    include: { user: { select: { name: true } } },
-  });
-
+  const listing = await getListingById(id);
   if (!listing) notFound();
+
+  const userId = await getCurrentUserId();
+  const isOwner = userId === listing.userId;
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
@@ -50,6 +51,11 @@ export default async function ListingDetailPage({
           <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400">
             Listed by {listing.user.name}
           </p>
+        )}
+        {isOwner && (
+          <div className="mt-6 pt-4 border-t border-zinc-200 dark:border-zinc-700">
+            <ListingActions listingId={listing.id} />
+          </div>
         )}
       </article>
     </div>
