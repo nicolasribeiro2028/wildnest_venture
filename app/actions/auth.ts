@@ -38,6 +38,7 @@ export async function signupAction(_prev: AuthResult, formData: FormData): Promi
 export async function loginAction(_prev: AuthResult, formData: FormData): Promise<AuthResult> {
   const email = (formData.get("email") as string)?.trim().toLowerCase();
   const password = formData.get("password") as string;
+  const redirectTo = formData.get("redirect") as string | null;
 
   if (!email || !password) {
     return { error: "Email and password are required." };
@@ -52,7 +53,8 @@ export async function loginAction(_prev: AuthResult, formData: FormData): Promis
   session.userId = user.id;
   await session.save();
 
-  redirect("/");
+  const target = redirectTo?.startsWith("/") ? redirectTo : "/";
+  redirect(target);
 }
 
 export async function logoutAction(): Promise<void> {

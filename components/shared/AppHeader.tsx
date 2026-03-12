@@ -24,6 +24,12 @@ export async function AppHeader() {
           {userId && (
             <>
               <Link
+                href="/messages"
+                className="text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+              >
+                Messages
+              </Link>
+              <Link
                 href="/my-sublets"
                 className="text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200"
               >

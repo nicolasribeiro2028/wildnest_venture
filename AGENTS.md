@@ -55,7 +55,7 @@ Keep the stack simple; avoid adding new frameworks or services unless the plan b
    - Dedicated page `/my-sublets`: list only current user’s listings where `tag = 'sublet'`.  
    - Create (Add sublet → /listings/new?tag=sublet), edit, delete sublet listings from here.
 
-7. **Messaging**  
+7. **Messaging**  -- DONE --  
    - DB: conversations (listing_id, student_user_id), messages (conversation_id, sender_user_id, body).  
    - API: create conversation from listing, send message, list conversations, get thread.  
    - UI: “Message” on listing detail → conversation; inbox list and thread view with reply.

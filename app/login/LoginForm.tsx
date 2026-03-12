@@ -5,11 +5,14 @@ import { loginAction, type AuthResult } from "@/app/actions/auth";
 
 const initialState: AuthResult = {};
 
-export function LoginForm() {
+export function LoginForm({ redirectTo }: { redirectTo?: string }) {
   const [state, formAction] = useActionState(loginAction, initialState);
 
   return (
     <form action={formAction} className="mt-4 flex flex-col gap-4">
+      {redirectTo && (
+        <input type="hidden" name="redirect" value={redirectTo} />
+      )}
       {state?.error && (
         <p className="rounded bg-red-50 px-3 py-2 text-sm text-red-700 dark:bg-red-950/50 dark:text-red-300">
           {state.error}
