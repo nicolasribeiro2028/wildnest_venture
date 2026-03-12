@@ -7,15 +7,15 @@ type ButtonVariant = "primary" | "secondary" | "outline";
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--bauhaus-green)] text-white hover:bg-[var(--bauhaus-green-dark)] border-2 border-[var(--bauhaus-green-dark)]",
+    "bg-[var(--color-primary)] text-white rounded-[var(--radius-pill)] hover:bg-[var(--color-primary-hover)] hover:-translate-y-px transition-[var(--btn-transition)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2",
   secondary:
-    "bg-[var(--bauhaus-purple)] text-white hover:bg-[var(--bauhaus-purple-dark)] border-2 border-[var(--bauhaus-purple-dark)]",
+    "bg-[var(--color-secondary)] text-[var(--color-foreground)] border border-[var(--color-border)] rounded-[var(--radius-pill)] hover:bg-[var(--color-border)]/30 transition-[var(--btn-transition)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2",
   outline:
-    "bg-transparent text-[var(--bauhaus-neutral)] border-2 border-[var(--bauhaus-neutral)] hover:bg-[var(--bauhaus-neutral)] hover:text-[var(--background)]",
+    "bg-transparent text-[var(--color-foreground)] border border-[var(--color-border)] rounded-[var(--radius-pill)] hover:bg-[var(--color-secondary)] transition-[var(--btn-transition)] focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2",
 };
 
 const base =
-  "inline-flex items-center justify-center font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--bauhaus-green)] focus:ring-offset-2 rounded-none";
+  "inline-flex items-center justify-center font-[var(--btn-font-weight)] px-[var(--btn-padding-x)] py-[var(--btn-padding-y)]";
 
 type ButtonBaseProps = {
   variant?: ButtonVariant;

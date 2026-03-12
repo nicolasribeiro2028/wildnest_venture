@@ -80,6 +80,47 @@ prisma/
 
 ---
 
+## Buildings CSV
+
+Building and apartment listings can be imported from a CSV. For college-focused housing search, please use these columns:
+
+| Column                 | Required | Purpose                                                    |
+|------------------------|----------|------------------------------------------------------------|
+| `id`                   | Yes      | Unique identifier (e.g. `foster-walker`, `1838-chicago`)   |
+| `name`                 | Yes      | Building or apartment name                                 |
+| `address`              | Yes      | Full street address                                        |
+| `lat`                  | Yes      | Latitude (for map pin)                                     |
+| `lng`                  | Yes      | Longitude (for map pin)                                    |
+| `description`          | No       | Short description (e.g. room types, atmosphere)            |
+| `floors`               | No       | Number of floors                                           |
+| `amenities`            | No       | Comma-separated list (e.g. "WiFi, Laundry, Study Lounge")  |
+| `room_types`           | No       | Common types (e.g. "Single, Double, Suite")                |
+| `price_per_month`      | No       | Starting at (numeric, USD)                                 |
+| `available_from`       | No       | Date listing becomes available (YYYY-MM-DD)                |
+| `lease_length_months`  | No       | Typical lease duration in months                           |
+| `nearby_landmarks`     | No       | Notable places nearby (e.g. "Near Tech, Main Library")     |
+| `tags`                 | No       | Comma-separated keywords, e.g. "on-campus,pet-friendly". Can be pre-defined such as: `on-campus`, `off-campus`, `pet-friendly`, `furnished`, `utilities-included`, `short-term`, `international`, `sublet` |
+| `distance_to_campus`   | No       | Walking distance or distance in meters                     |
+| `contact_email`        | No       | Leasing or landlord contact email                          |
+| `place_type`           | Yes      | Marker for type of place — e.g., `building`, `bus-stop`, `supermarket`, `restaurant`, etc. Use to tag differently on the map |
+
+
+### usefull links to try to search with APIs 
+ - civic data : https://www.civicdata.com/dataset?organization=evanston-9adef673-0141
+
+**Example:**
+
+```csv
+id,name,address,lat,lng,amenities,room_types,price_per_month,available_from
+foster-walker,Foster-Walker Complex,1927 Orrington Ave Evanston IL,42.0512,-87.6815,WiFi,Laundry,Study Lounge,"Single,Double",1180,2024-06-15
+1838-chicago,1838 Chicago Ave,1838 Chicago Ave Evanston IL,42.0485,-87.6782,WiFi,Elevator,"Single",1050,2024-09-01
+```
+
+
+```
+
+---
+
 ## License
 
 Private — for MVP development.

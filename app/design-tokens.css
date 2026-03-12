@@ -1,0 +1,96 @@
+/**
+ * WildNest Design Tokens
+ * Single source of truth for colors, typography, spacing, and components.
+ * Edit this file to iterate on sizes, fonts, and colors across the app.
+ * See product.md for design rationale.
+ */
+
+:root {
+  /* ─── Colors ───────────────────────────────────────────────────────────── */
+  --color-primary: #F59E42;        /* Laranja — primary visual identity */
+  --color-primary-hover: #e88928;
+  --color-secondary: #F2E9DC;      /* Soft Sand — normal white areas */
+  --color-accent: #4E2A84;        /* Purple Northwestern — 5% */
+  --color-foreground: #2E2E2E;    /* Preto fosco — black elements */
+  --color-background: #F2E9DC;    /* Soft Sand — page background */
+  --color-surface: #ffffff;        /* Cards, inputs */
+  --color-success: #22C55E;
+  --color-warning: #FACC15;
+  --color-error: #EF4444;
+  --color-border: #E5E5E5;
+
+  /* ─── Typography ──────────────────────────────────────────────────────── */
+  --font-heading: var(--font-plus-jakarta), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+
+  /* Font sizes (px) */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 18px;
+  --text-xl: 20px;
+  --text-2xl: 24px;
+  --text-3xl: 28px;
+  --text-4xl: 36px;
+  --text-5xl: 48px;
+
+  /* Heading scale */
+  --h1-size: 60px;
+  --h1-weight: 600;
+  --h2-size: 36px;
+  --h2-weight: 600;
+  --h3-size: 28px;
+  --h3-weight: 600;
+  --h4-size: 22px;
+  --h4-weight: 500;
+
+  /* Line heights */
+  --leading-heading: 1.25;
+  --leading-body: 1.6;
+
+  /* ─── Spacing (8px base) ──────────────────────────────────────────────── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ─── Layout ───────────────────────────────────────────────────────────── */
+  --container-max: 1200px;
+  --container-padding: 24px;
+
+  /* ─── Border radius ───────────────────────────────────────────────────── */
+  --radius-sm: 8px;
+  --radius-input: 10px;
+  --radius-card: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+
+  /* ─── Components ─────────────────────────────────────────────────────── */
+  /* Buttons */
+  --btn-primary-bg: var(--color-primary);
+  --btn-primary-hover: var(--color-primary-hover);
+  --btn-secondary-bg: var(--color-secondary);
+  --btn-padding-x: 20px;
+  --btn-padding-y: 12px;
+  --btn-font-weight: 600;
+  --btn-transition: 0.15s ease;
+
+  /* Cards */
+  --card-bg: var(--color-surface);
+  --card-radius: var(--radius-card);
+  --card-padding: 16px;
+  --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.08);
+
+  /* Form inputs */
+  --input-height: 44px;
+  --input-radius: var(--radius-input);
+  --input-border: 1px solid var(--color-border);
+  --input-focus-ring: 0 0 0 3px rgba(245, 158, 66, 0.15);
+}
