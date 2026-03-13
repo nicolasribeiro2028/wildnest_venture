@@ -24,6 +24,32 @@ export type ListingFormData = {
   amenityTags?: string | null;
 };
 
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+export async function getDiscoveryListings(options?: { limit?: number }) {
+  const listings = await prisma.listing.findMany({
+    orderBy: { createdAt: "desc" },
+    select: {
+      id: true,
+      title: true,
+      price: true,
+      tag: true,
+      term: true,
+      imageUrls: true,
+      amenityTags: true,
+    },
+  });
+  const shuffled = shuffleArray(listings);
+  return options?.limit ? shuffled.slice(0, options.limit) : shuffled;
+}
+
 export async function getListingsForMap() {
   const listings = await prisma.listing.findMany({
     select: { id: true, pinX: true, pinY: true, title: true },

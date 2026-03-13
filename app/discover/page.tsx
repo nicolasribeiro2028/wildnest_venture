@@ -1,25 +1,9 @@
 import Link from "next/link";
-import { prisma } from "@/app/lib/db";
+import { getDiscoveryListings } from "@/app/actions/listings";
 import { DiscoveryDeck } from "@/components/discovery/DiscoveryDeck";
 
-async function getDiscoveryListings() {
-  return prisma.listing.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 4,
-    select: {
-      id: true,
-      title: true,
-      price: true,
-      tag: true,
-      term: true,
-      imageUrls: true,
-      amenityTags: true,
-    },
-  });
-}
-
 export default async function DiscoverPage() {
-  const listings = await getDiscoveryListings();
+  const listings = await getDiscoveryListings({ limit: 4 });
 
   return (
     <div className="flex min-h-screen flex-col items-center bg-[#F2E9DC] px-4 py-10">
@@ -46,7 +30,7 @@ export default async function DiscoverPage() {
         <p className="text-sm text-zinc-500">
           React to a few listings so we can learn what you like.
           <br />
-          Nothing is saved — just explore!
+          We are later using this to get more information for your future house — just explore!
         </p>
       </div>
 

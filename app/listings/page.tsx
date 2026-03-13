@@ -1,27 +1,10 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { prisma } from "@/app/lib/db";
-import { getListings } from "@/app/actions/listings";
+import { getListings, getDiscoveryListings } from "@/app/actions/listings";
 import { ListingFilters } from "@/components/listings/ListingFilters";
 import { ListingImages } from "@/components/listings/ListingImages";
 import { Collapsible } from "@/components/ui/Collapsible";
 import { DiscoveryDeck } from "@/components/discovery/DiscoveryDeck";
-
-async function getDiscoveryListings() {
-  return prisma.listing.findMany({
-    orderBy: { createdAt: "desc" },
-    take: 4,
-    select: {
-      id: true,
-      title: true,
-      price: true,
-      tag: true,
-      term: true,
-      imageUrls: true,
-      amenityTags: true,
-    },
-  });
-}
 
 export default async function ListingsPage({
   searchParams,
