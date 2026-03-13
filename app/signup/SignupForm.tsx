@@ -6,8 +6,7 @@ import { signupAction, type AuthResult } from "@/app/actions/auth";
 const initialState: AuthResult = {};
 
 const inputCls =
-  "rounded-[10px] border border-[#E5E5E5] bg-white px-3 py-2 text-sm text-[#2E2E2E] outline-none focus:ring-2 focus:ring-[#F59E42]/30 focus:border-[#F59E42] transition";
-
+  "w-full rounded-[10px] border border-[#E5E5E5] bg-white px-3 py-2 text-sm text-[#2E2E2E] outline-none focus:ring-2 focus:ring-[#F59E42]/30 focus:border-[#F59E42] transition";
 export function SignupForm() {
   const [state, formAction] = useActionState(signupAction, initialState);
 
