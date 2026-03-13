@@ -181,8 +181,82 @@ On save: update `users`; upsert `user_preferences`.
 
 ---
 
-## 10. Planned / future work
+## 10. Discovery / swipe feature
+
+A lightweight, mock "swipe" mechanic that lets users rate listings (like / dislike / neutral) for feel. **Reactions are not stored anywhere** and have zero effect on existing app logic. This is a data-collection seed for the future house-selection algorithm — wiring reactions to a `ListingReaction` table is deferred until the algorithm is built.
+
+### Entry point 1 — Sign-up Step 3 (`/discover`)
+
+After the user saves preferences at `/signup/preferences`, the `redirectTo` changes from `"/"` to `"/discover"`. The page is also skippable ("Skip for now" → `/`).
+
+Listings shown: **4 most recently created** listings (`orderBy: createdAt desc, take: 4`). No image filter — if a listing has no image, an emoji placeholder (`🏠`) is centered in the image area.
+
+After swiping all 4 cards the deck shows a "Done!" state. The primary CTA is "Go to home" → `/`.
+
+### Entry point 2 — Listings/engine page (`/listings`)
+
+A collapsible **"Discover new listings"** section is added to the listings page. It is **collapsed by default**. The existing filters and listing grid are also wrapped in collapsible sections so the page layout is consistent. The discover section uses the same deck mechanic and the same query (4 most recent).
+
+### Card UI (`DiscoveryCard`)
+
+Each card shows:
+- Listing image (first image if available; otherwise `🏠` emoji centered on a sand-color placeholder)
+- Listing title + price
+- Tag badge (sublet / landlord) and term badge
+- Amenity tags (if any)
+
+Below the card, three action buttons:
+
+| Button | Label | Color |
+|--------|-------|-------|
+| ✕ | Dislike | Red (`#EF4444`) |
+| — | Neutral | Gray (`#A1A1AA`) |
+| ✓ | Like | Green (`#22C55E`) |
+
+### Animation
+
+When an action button is clicked the card plays a directional fade-out animation **before** the deck advances to the next card:
+
+| Action | Direction | Color overlay |
+|--------|-----------|---------------|
+| Dislike (✕) | Slide left + fade | Red tint |
+| Like (✓) | Slide right + fade | Green tint |
+| Neutral (—) | Fade up | No tint |
+
+Implementation: CSS keyframe classes (`animate-swipe-left`, `animate-swipe-right`, `animate-swipe-up`) are applied via `useState`. An `onAnimationEnd` handler advances the card index after the animation completes (~300 ms).
+
+### State machine (`DiscoveryDeck`)
+
+```
+idle → animating(direction) → [onAnimationEnd] → next card (or done state)
+```
+
+All state is local (`useState`). No server calls on reaction. The deck receives the 4 listing objects as props (fetched server-side by the parent page/section).
+
+### New files
+
+| Path | Role |
+|------|------|
+| `app/discover/page.tsx` | Full-page Step 3. Fetches 4 listings server-side; renders `DiscoveryDeck`. |
+| `components/discovery/DiscoveryDeck.tsx` | Client component — state machine, progress indicator, done state. |
+| `components/discovery/DiscoveryCard.tsx` | Single card UI + three action buttons. |
+
+### Changes to existing files
+
+| File | Change |
+|------|--------|
+| `app/signup/preferences/page.tsx` | Change `redirectTo` from `"/"` to `"/discover"` (Step 2 of 3 badge update too). |
+| `app/listings/page.tsx` | Wrap filters + listing grid + discover deck in collapsible `<Collapsible>` sections; discover collapsed by default. |
+| `app/globals.css` or `app/design-tokens.css` | Add `@keyframes` for `swipe-left`, `swipe-right`, `swipe-up` animations. |
+
+### Route access
+
+`/discover` is **public** — no auth required. A freshly signed-up user is already authenticated, but the page works for any visitor.
+
+---
+
+## 11. Planned / future work
 
 - **UI polish** — Refine many small interface elements.
-- **House-selection algorithm** — Matching/recommendation logic for listings; will consume `user_preferences` data collected above.
+- **House-selection algorithm** — Matching/recommendation logic for listings; will consume `user_preferences` and eventually `ListingReaction` data collected via the discovery feature.
 - Replace auth with OAuth; payments; contracts; verification; reviews; multi-campus; admin moderation; real-time messaging; notifications.

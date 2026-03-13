@@ -1,24 +1,11 @@
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
+export { parseImageUrls, stringifyImageUrls } from "./image-urls";
 
 const UPLOAD_DIR = "public/uploads";
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_IMAGES = 5;
-
-export function parseImageUrls(imageUrls: string | null): string[] {
-  if (!imageUrls) return [];
-  try {
-    const parsed = JSON.parse(imageUrls) as unknown;
-    return Array.isArray(parsed) ? parsed.filter((u): u is string => typeof u === "string") : [];
-  } catch {
-    return [];
-  }
-}
-
-export function stringifyImageUrls(urls: string[]): string {
-  return JSON.stringify(urls);
-}
 
 export async function saveListingImages(
   files: File[],
